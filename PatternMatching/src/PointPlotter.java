@@ -20,9 +20,11 @@ public class PointPlotter {
         StdDraw.setXscale(0, 32768);
         StdDraw.setYscale(0, 32768);
         StdDraw.show(0);
+        StdDraw.setPenRadius(0.01); 
 
         // read in the input
-        String filename = args[0];
+        //String filename = args[0];
+        String filename = "input10.txt";
         In in = new In(filename);
         int N = in.readInt();
         for (int i = 0; i < N; i++) {
