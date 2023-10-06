@@ -16,7 +16,7 @@ public class Point implements Comparable<Point> {
     public final int x, y;
 
     // compare points by slope
-    public final Comparator<Point> SLOPE_ORDER = null;
+    public final Comparator<Point> SLOPE_ORDER = new SlopeOrder();
 
     // create the point (x, y)
     public Point(int x, int y) {
@@ -73,6 +73,22 @@ public class Point implements Comparable<Point> {
     public String toString() {
         /* DO NOT MODIFY */
         return "(" + x + ", " + y + ")";
+    }
+
+    private class SlopeOrder implements Comparator<Point> {
+        public int compare(Point point1, Point point2) {
+            if (point1 == null || point2 == null) {
+                throw new NullPointerException();
+            }
+
+            if (slopeTo(point1) < slopeTo(point2)) {
+                return -1;
+            } else if (slopeTo(point1) == slopeTo(point2)) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
     }
 
     public static void main(String[] args) {
