@@ -63,6 +63,9 @@ public class Point implements Comparable<Point> {
         else if ((this.y == that.y) && (this.x < that.x)) {
             result = -1;
         }
+        else if ((this.y == that.y) && (this.x > that.x)) {
+            result = 1;
+        }
         else if (this.y > that.y) {
             result = 1;
         }
