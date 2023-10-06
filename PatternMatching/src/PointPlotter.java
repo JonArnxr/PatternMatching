@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.StdDraw;
 
 /*************************************************************************
@@ -28,7 +29,7 @@ public class PointPlotter {
         for (int i = 0; i < N; i++) {
             int x = in.readInt();
             int y = in.readInt();
-            Point p = new Point(x, y);
+            Point2D p = new Point2D(x, y);
             p.draw();
         }
 

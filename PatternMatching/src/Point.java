@@ -1,5 +1,9 @@
 import java.util.Comparator;
 
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Out;
+import edu.princeton.cs.algs4.StdDraw;
+
 /*************************************************************************
  * Compilation: javac Point.java Execution: Dependencies: StdDraw.java
  *
