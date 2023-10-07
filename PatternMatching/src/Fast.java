@@ -13,38 +13,50 @@ public class Fast {
 
     private void findLineSegments(Point[] points) {
         Arrays.sort(points);
-    
-        ResizingArrayQueue<Point> segmentPoints = new ResizingArrayQueue<>();
-        for (int p = 0; p < points.length - 3; p++) {
-            Arrays.sort(points, p + 1, points.length, points[p].SLOPE_ORDER);
-            segmentPoints.enqueue(points[p]);
-    
-            for (int q = p + 1; q < points.length - 2; q++) {
-                double slopePQ = points[p].slopeTo(points[q]);
-    
-                if (slopePQ != points[p].slopeTo(points[q + 1])) {
-                    if (segmentPoints.size() >= 3) {
-                        Point[] segmentArray = new Point[segmentPoints.size()];
-                        int i = 0;
-                        for (Point point : segmentPoints) {
-                            segmentArray[i++] = point;
+        int N = points.length;
+        Point[] slopeOrdered = new Point[N];
+        //make a copy of array
+        for (int i = 0; i < N; i++) {
+            slopeOrdered[i] = points[i];          
+        }
+        //ResizingArrayQueue<Point> candidatePoints = new ResizingArrayQueue<>();
+        //Point[] candidatePoints = new Point[N];
+        for (int i = 0; i < N; i++) {
+            ResizingArrayQueue<Point> candidatePoints = new ResizingArrayQueue<>();
+            Point p = points[i];
+            Arrays.sort(slopeOrdered);
+            Arrays.sort(slopeOrdered, p.SLOPE_ORDER);
+            int j = 1;
+            while (j < N -1) {
+                Point q = slopeOrdered[j];
+                double slope = p.slopeTo(q);
+                if (slope == p.slopeTo(slopeOrdered[j+1])) {
+                    int index = j;
+                    int indexstop = j+1;
+                    for (int k = j + 1; k < N; k++) {
+                        if (slope == p.slopeTo(slopeOrdered[k])) {
+                            indexstop = k;
                         }
-                        lineSegments.enqueue(Arrays.asList(segmentArray));
+                        else {
+                            break;
+                        }
                     }
-                    segmentPoints = new ResizingArrayQueue<>();
+
+                    if ((indexstop - index) >= 2 && (p.compareTo(slopeOrdered[index]) < 0)) {
+                        candidatePoints.enqueue(p);
+                        for (int a = index; a <= indexstop; a++) {
+                            candidatePoints.enqueue(slopeOrdered[a]);
+                        }
+                        lineSegments.enqueue(candidatePoints);
+                    }
+                    j = indexstop + 1;
+
+                    }
+                
+                else {
+                    j++;
                 }
-                segmentPoints.enqueue(points[q]);
             }
-    
-            if (segmentPoints.size() >= 3) {
-                Point[] segmentArray = new Point[segmentPoints.size()];
-                int i = 0;
-                for (Point point : segmentPoints) {
-                    segmentArray[i++] = point;
-                }
-                lineSegments.enqueue(Arrays.asList(segmentArray));
-            }
-            segmentPoints = new ResizingArrayQueue<>();
         }
     }
     
