@@ -2,6 +2,8 @@ import java.util.Arrays;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.ResizingArrayQueue;
 import edu.princeton.cs.algs4.Out;
+import edu.princeton.cs.algs4.Stopwatch;
+
 
 public class Brute {
     private final ResizingArrayQueue<Iterable<Point>> lineSegments;
@@ -46,7 +48,7 @@ public class Brute {
         // Read input points and create Brute object
 
         Out out = new Out();
-        In in = new In("test150.txt");
+        In in = new In();
         int N = in.readInt();
         Point[] points = new Point[N];
         for (int i = 0; i < N; i++) {
@@ -54,9 +56,11 @@ public class Brute {
             int y = in.readInt();
             points[i] = new Point(x, y);
         }
-
+        //Stopwatch stopwatch = new Stopwatch(); //used for the readme assignment
         Brute brute = new Brute(points);
-
+        //double elapsedTime = stopwatch.elapsedTime(); //used for the readme assignment
+        //out.println(elapsedTime); //used for the readme assignment
+        
         // Output the number of line segments and the line segments
         out.println("Number of line segments: " + brute.numberOfSegments());
         for (Iterable<Point> segment : brute.segments()) {

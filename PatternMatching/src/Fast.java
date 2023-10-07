@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.ResizingArrayQueue;
+import edu.princeton.cs.algs4.Stopwatch;
 import edu.princeton.cs.algs4.Out;
 
 public class Fast {
@@ -74,7 +75,7 @@ public class Fast {
         // Read input points and create fast object
 
         Out out = new Out();
-        In in = new In("test1600.txt");
+        In in = new In();
         int N = in.readInt();
         Point[] points = new Point[N];
         for (int i = 0; i < N; i++) {
@@ -83,7 +84,11 @@ public class Fast {
             points[i] = new Point(x, y);
         }
 
+        //Stopwatch stopwatch = new Stopwatch(); //used for the readme assignment
         Fast fast = new Fast(points);
+        //double elapsedTime = stopwatch.elapsedTime(); //used for the readme assignment
+        //out.println(elapsedTime); //used for the readme assignment
+
 
         // Output the number of line segments and the line segments
         out.println(fast.numberOfSegments());

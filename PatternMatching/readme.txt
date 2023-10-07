@@ -60,20 +60,24 @@ first point through the next iteration. but that was okay for the fast.java
     
       N       brute       sorting
  ---------------------------------
-    150
-    200
-    300
-    400
-    800
-   1600
-   3200
-   6400
-  12800
+    150   0.297               0.012
+    200   0.79                0.019
+    300   3.565               0.034
+    400   11.262              0.084
+    800   186.806             0.353
+   1600   3101.72(approx)     0.863
+   3200   51419.5(approx)     2.705
+   6400   851693.81(approx)   11.077
+  12800   14103389(approx)    45.66
+
+we calculate T(800)/T(400) = 16.58
+so T(1600) = 16.58 * 186.806 which makes sense since the amount is being doubled (2^4)
+and so on..
 
 
-Brute:    ~
+Brute: ~ N^4   
 
-Sorting:  ~
+Sorting:  ~ N^2 Log N
 
 
 
@@ -100,7 +104,12 @@ Sorting:  O(N^2 log N)   Sorting usually has the time complexity of O(N log N) w
  *  out different representations of the same line segment when there
  *  are 5 or more points on a line segment, indicate that here.
  **********************************************************************/
-
+yes, I stated above. when we get many points that form a line the first combination
+holds the first p (our point in which we are looking at all other slopes) gets added 
+to the listthen when going to the next point that is in the same line as before it 
+finds the rest of the same points and adds them to an array that gets added to the 
+lineSegments and so on so we do get n-4 arrays forming the same linefor n points 
+that form a line.
 
 
 /**********************************************************************
@@ -109,13 +118,21 @@ Sorting:  O(N^2 log N)   Sorting usually has the time complexity of O(N log N) w
  *  include any help from people (including course staff, lab TAs,
  *  classmates, and friends) and attribute them by name.
  **********************************************************************/
+We used the internet, different forums for help on how to approach the problems of
+this assignment i.e. chatGPT, youtube, Coding Forums. to divide the entire
+problem into smaller problems to get a better understanding of what to do.
 
 
 
 /**********************************************************************
  *  Describe any serious problems you encountered.                    
  **********************************************************************/
-
+The use of arrays in this assignment.
+we believe the use of arraylists from java util should be allowed
+it added unnecessary complexity to use only arrays that need a 
+predetermined size. we ended up using resizablearrayqueue from algs4
+but even with that it posed unnecessary complexity in how to
+iterate through that.
 
 
 
@@ -124,3 +141,14 @@ Sorting:  O(N^2 log N)   Sorting usually has the time complexity of O(N log N) w
  *  on how much you learned from doing the assignment, and whether    
  *  you enjoyed doing it.                                             
  **********************************************************************/
+the description for this assignment was very poor. we are given nothing
+to work with, and we have no idea how the autograder works. so we have no idea
+on how our soloutions should be implemented. and the descriptions themselves for each
+problem are not very clear. it was not clear if we should have different combinations
+forming the same line. it was not clear if the subarrays returned from segments()
+should return always arrays of length 4. we wasted a lot of time trying
+to understand what was being asked of us. 
+
+IMPORTANT!!!
+please let Magnús know that the description should be updated and that we are
+unsatisfied with this assignment.
