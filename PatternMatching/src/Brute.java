@@ -46,7 +46,7 @@ public class Brute {
         // Read input points and create Brute object
 
         Out out = new Out();
-        In in = new In("test2.txt");
+        In in = new In();
         int N = in.readInt();
         Point[] points = new Point[N];
         for (int i = 0; i < N; i++) {

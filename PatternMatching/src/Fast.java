@@ -13,35 +13,42 @@ public class Fast {
 
     private void findLineSegments(Point[] points) {
         Arrays.sort(points);
-        int N = points.length;
-        //ResizingArrayQueue<Point> candidatePoints = new ResizingArrayQueue<>();
-        //Point[] candidatePoints = new Point[N];
-        for (int p = 0; p < N-1; p++) {
-            Point[] candidatePoints = new Point[N - (p + 1)]; //the list will never be longer than the rest of the points available
-            int startIndex = p + 1;
-            for (int i = startIndex; i < N; i++) {
-                candidatePoints[i - startIndex] = points[i];
-            }
-            Arrays.sort(candidatePoints, points[p].SLOPE_ORDER);
-
-            double slope = points[p].slopeTo(candidatePoints[0]);
-            double compareSlope = 0;
-            int count = 0;
-            ResizingArrayQueue<Point> indexes = new ResizingArrayQueue<>();
-            indexes.enqueue(points[p]);
-            for (int j = 0; j < candidatePoints.length; j++) {
-                compareSlope = points[p].slopeTo(candidatePoints[j]);
-                if (slope == compareSlope) {
-                    count++;
-                    indexes.enqueue(candidatePoints[j]);
+    
+        ResizingArrayQueue<Point> segmentPoints = new ResizingArrayQueue<>();
+        for (int p = 0; p < points.length - 3; p++) {
+            Arrays.sort(points, p + 1, points.length, points[p].SLOPE_ORDER);
+            segmentPoints.enqueue(points[p]);
+    
+            for (int q = p + 1; q < points.length - 2; q++) {
+                double slopePQ = points[p].slopeTo(points[q]);
+    
+                if (slopePQ != points[p].slopeTo(points[q + 1])) {
+                    if (segmentPoints.size() >= 3) {
+                        Point[] segmentArray = new Point[segmentPoints.size()];
+                        int i = 0;
+                        for (Point point : segmentPoints) {
+                            segmentArray[i++] = point;
+                        }
+                        lineSegments.enqueue(Arrays.asList(segmentArray));
+                    }
+                    segmentPoints = new ResizingArrayQueue<>();
                 }
-                if (j + 1 == candidatePoints.length && count >= 3) {
-                    lineSegments.enqueue(Arrays.asList(candidatePoints));
-                }
-
+                segmentPoints.enqueue(points[q]);
             }
+    
+            if (segmentPoints.size() >= 3) {
+                Point[] segmentArray = new Point[segmentPoints.size()];
+                int i = 0;
+                for (Point point : segmentPoints) {
+                    segmentArray[i++] = point;
+                }
+                lineSegments.enqueue(Arrays.asList(segmentArray));
+            }
+            segmentPoints = new ResizingArrayQueue<>();
         }
     }
+    
+    
 
     public int numberOfSegments() {
         return lineSegments.size();
@@ -55,7 +62,7 @@ public class Fast {
         // Read input points and create fast object
 
         Out out = new Out();
-        In in = new In();
+        In in = new In("test3.txt");
         int N = in.readInt();
         Point[] points = new Point[N];
         for (int i = 0; i < N; i++) {
