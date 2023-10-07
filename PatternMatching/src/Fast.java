@@ -74,7 +74,7 @@ public class Fast {
         // Read input points and create fast object
 
         Out out = new Out();
-        In in = new In();
+        In in = new In("test1600.txt");
         int N = in.readInt();
         Point[] points = new Point[N];
         for (int i = 0; i < N; i++) {

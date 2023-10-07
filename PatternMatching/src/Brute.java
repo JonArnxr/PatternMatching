@@ -46,7 +46,7 @@ public class Brute {
         // Read input points and create Brute object
 
         Out out = new Out();
-        In in = new In();
+        In in = new In("test150.txt");
         int N = in.readInt();
         Point[] points = new Point[N];
         for (int i = 0; i < N; i++) {
@@ -58,7 +58,7 @@ public class Brute {
         Brute brute = new Brute(points);
 
         // Output the number of line segments and the line segments
-        System.out.println("Number of line segments: " + brute.numberOfSegments());
+        out.println("Number of line segments: " + brute.numberOfSegments());
         for (Iterable<Point> segment : brute.segments()) {
             for (Point p : segment) {
                 out.print(p + " -> ");

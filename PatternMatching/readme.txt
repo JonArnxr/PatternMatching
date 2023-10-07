@@ -32,8 +32,18 @@ exactly the same would the method return 0.
  *           What steps did you do to avoid outputting permutations
  *           and subsegments?
  **********************************************************************/
+we always sorted before going through the iteration using the comparator
 
+in Brute we limited the amount of points that form a line to 4 and we
+never used the same point for p (the first point) again. as can be seen in 
+our chain of for loops.
 
+in Fast we ordered the list using SLOPE_ORDER, so that way for each point p
+to we iterated throu the index of this list and when we found that there 
+were no longer any points with the same slope we stopped and added the indexes
+to the lineSegments. and then we continued on for the next point. now this could
+potentially make many lists that have some of the same points always skipping the
+first point through the next iteration. but that was okay for the fast.java
 
 
 /**********************************************************************
