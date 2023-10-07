@@ -5,8 +5,8 @@
 Name:             Sæþór Berg Ásgeirsson
 Login:            saethor22@ru.is
 
-Partner name:     
-Partner login:    
+Partner name:     Jón Arnar Snorrason
+Partner login:    jonarn22@ru.is
 
 Hours to complete assignment (optional):  around 20 hours
 
@@ -74,9 +74,14 @@ Sorting:  ~
  *                your answer briefly.
  **********************************************************************/
 
-Brute:
+Brute:    O(N^4)         In the program we are checking 4 points at a time,
+                         by doing that we have a nested loop structure that checks combinations of 4 points.
+                         That leads to complexity of O(N^4).
+          
 
-Sorting:
+Sorting:  O(N^2 log N)   Sorting usually has the time complexity of O(N log N) when using efficient algorithms.
+                         Since we are applying sorting to each of the N points, the overall time complexity
+                         becomes O(N^2 log N).
 
 
 
