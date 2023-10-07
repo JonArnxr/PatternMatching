@@ -2,13 +2,13 @@
  *  Pattern Recognition readme.txt template
  **********************************************************************/
 
-Name:             
-Login:            
+Name:             Sæþór Berg Ásgeirsson
+Login:            saethor22@ru.is
 
 Partner name:     
 Partner login:    
 
-Hours to complete assignment (optional):
+Hours to complete assignment (optional):  around 20 hours
 
 
 
@@ -17,8 +17,14 @@ Hours to complete assignment (optional):
  *           Describe how you implemented compareTo() and the
  *           slopeTo() methods in the Point data type.
  **********************************************************************/
-
-
+When using the Brute method we iterated through every combination of 4 points
+in the input file and compared if all of the slopes were the same.
+for each combination.
+the slopeTo() method was used to find the slope between two points.
+we used the formula to find the slopes bbetween two points
+compareTo() we compared the y values to eachother and if they were the
+same we compared the x of the two points so only if the two points were 
+exactly the same would the method return 0.
 
 
 /**********************************************************************
