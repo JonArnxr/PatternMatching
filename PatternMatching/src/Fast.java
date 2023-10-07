@@ -1,81 +1,85 @@
-import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.In;
 import java.util.Arrays;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.ResizingArrayQueue;
+import edu.princeton.cs.algs4.Out;
 
 public class Fast {
+    private final ResizingArrayQueue<Iterable<Point>> lineSegments;
+
+    public Fast(Point[] points) {
+        lineSegments = new ResizingArrayQueue<>();
+        findLineSegments(points);
+    }
+
+    private void findLineSegments(Point[] points) {
+        Arrays.sort(points);
+        int N = points.length;
+        //ResizingArrayQueue<Point> candidatePoints = new ResizingArrayQueue<>();
+        //Point[] candidatePoints = new Point[N];
+        for (int p = 0; p < N-1; p++) {
+            Point[] candidatePoints = new Point[N - (p + 1)]; //the list will never be longer than the rest of the points available
+            int startIndex = p + 1;
+            for (int i = startIndex; i < N; i++) {
+                candidatePoints[i - startIndex] = points[i];
+            }
+            Arrays.sort(candidatePoints, points[p].SLOPE_ORDER);
+
+            double slope = points[p].slopeTo(candidatePoints[0]);
+            double compareSlope = 0;
+            int count = 0;
+            ResizingArrayQueue<Point> indexes = new ResizingArrayQueue<>();
+            indexes.enqueue(points[p]);
+            for (int j = 0; j < candidatePoints.length; j++) {
+                compareSlope = points[p].slopeTo(candidatePoints[j]);
+                if (slope == compareSlope) {
+                    count++;
+                    indexes.enqueue(candidatePoints[j]);
+                }
+                if (j + 1 == candidatePoints.length && count >= 3) {
+                    lineSegments.enqueue(Arrays.asList(candidatePoints));
+                }
+
+            }
+        }
+    }
+
+    public int numberOfSegments() {
+        return lineSegments.size();
+    }
+
+    public Iterable<Iterable<Point>> segments() {
+        return lineSegments;
+    }
+
     public static void main(String[] args) {
-        In in = new In("test.txt"); // Replace "input.txt" with your input file name
+        // Read input points and create fast object
+
+        Out out = new Out();
+        In in = new In();
         int N = in.readInt();
         Point[] points = new Point[N];
-
         for (int i = 0; i < N; i++) {
             int x = in.readInt();
             int y = in.readInt();
             points[i] = new Point(x, y);
         }
 
-        findCollinearSegments(points);
-    }
+        Fast fast = new Fast(points);
 
-    public static void findCollinearSegments(Point[] points) {
-        Arrays.sort(points); // Sort points in their natural order
-
-        for (int i = 0; i < points.length - 3; i++) {
-            Point p = points[i];
-            Arrays.sort(points, i + 1, points.length, p.SLOPE_ORDER); // Sort points based on slopes with p
-
-            int count = 1;
-            double slope = p.slopeTo(points[i + 1]);
-
-            int startIdx = -1;
-            int endIdx = -1;
-
-            for (int j = i + 2; j < points.length; j++) {
-                double currentSlope = p.slopeTo(points[j]);
-
-                if (Double.compare(slope, currentSlope) == 0) {
-                    count++;
-
-                    if (startIdx == -1) {
-                        startIdx = j - 1;
-                    }
-
-                    if (count >= 3 && j == points.length - 1) {
-                        endIdx = j;
-                        printCollinearSegment(points, startIdx, endIdx, p);
-                    }
-                } else {
-                    if (count >= 3) {
-                        endIdx = j - 1;
-                        printCollinearSegment(points, startIdx, endIdx, p);
-                    }
-                    slope = currentSlope;
-                    count = 1;
-                    startIdx = -1;
-                    endIdx = -1;
+        // Output the number of line segments and the line segments
+        out.println(fast.numberOfSegments());
+        for (Iterable<Point> segment : fast.segments()) {
+            boolean first = true;
+        
+            for (Point p : segment) {
+                if (!first) {
+                    out.print(" -> ");
                 }
+                out.print(p);
+                first = false;
             }
+        
+            out.println();
         }
-    }
-
-    private static void printCollinearSegment(Point[] points, int start, int end, Point origin) {
-        Point[] collinearPoints = new Point[end - start + 2];
-        collinearPoints[0] = origin;
-
-        for (int k = start; k <= end; k++) {
-            collinearPoints[k - start + 1] = points[k];
-        }
-
-        Arrays.sort(collinearPoints); // Sort collinear points by natural order
-        boolean first = true;
-
-        for (Point point : collinearPoints) {
-            if (!first) {
-                StdOut.print(" -> ");
-            }
-            StdOut.print(point);
-            first = false;
-        }
-        StdOut.println();
     }
 }
